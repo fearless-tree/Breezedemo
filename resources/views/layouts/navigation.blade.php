@@ -16,6 +16,15 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
                 </div>
+
+                @if (Auth::check() && in_array(Auth::user()->rolename, ['patient', 'praktijkmanagement']))
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        <x-nav-link :href="route('patient.index')"
+                                    :active="request()->routeIs('patient.index')">
+                            {{ __('Patient') }}
+                        </x-nav-link>
+                    </div>
+                @endif
             </div>
 
             <!-- Settings Dropdown -->
