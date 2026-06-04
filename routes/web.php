@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TandartsController;
 use App\Http\Controllers\MondhygienistController;
+use App\Http\Controllers\PraktijkmanagementController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -16,6 +17,10 @@ Route::get('/tandarts', [TandartsController::class, 'index'])
 Route::get('/mondhygienist', [MondhygienistController::class, 'index'])
     ->name('mondhygienist.index')
     ->middleware(['auth', 'role:mondhygienist']);
+
+Route::get('/praktijkmanagement', [PraktijkmanagementController::class, 'index'])
+    ->name('praktijkmanagement.index')
+    ->middleware(['auth', 'role:praktijkmanagement']);
 
 Route::get('/dashboard', function () {
     return view('dashboard');
