@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AssistentController;
+use App\Http\Controllers\PatientController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TandartsController;
 use App\Http\Controllers\MondhygienistController;
@@ -26,6 +27,10 @@ Route::get('/praktijkmanagement', [PraktijkmanagementController::class, 'index']
 Route::get('/assistent', [AssistentController::class, 'index'])
     ->name('assistent.index')
     ->middleware(['auth', 'role:assistent']);
+
+Route::get('/patient', [PatientController::class, 'index'])
+    ->name('patient.index')
+    ->middleware(['auth', 'role:patient']);
 
 Route::get('/dashboard', function () {
     return view('dashboard');
