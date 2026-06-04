@@ -1,11 +1,16 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TandartsController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/tandarts', [TandartsController::class, 'index'])
+    ->name('tandarts.index')
+    ->middleware(['auth', 'role:tandarts']);
 
 Route::get('/dashboard', function () {
     return view('dashboard');
