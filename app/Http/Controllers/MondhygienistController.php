@@ -13,7 +13,7 @@ class MondhygienistController extends Controller
     {
         // View
         return view('mondhygienist.index', [
-            'title' => 'MondhygienistController',
+            'title' => 'Mondhygienist Home',
         ]);
     }
 
