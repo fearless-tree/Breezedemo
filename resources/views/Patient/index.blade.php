@@ -1,1 +1,1 @@
-{{ $tittle }}
+{{ $title }}
