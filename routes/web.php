@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TandartsController;
+use App\Http\Controllers\MondhygienistController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -11,6 +12,10 @@ Route::get('/', function () {
 Route::get('/tandarts', [TandartsController::class, 'index'])
     ->name('tandarts.index')
     ->middleware(['auth', 'role:tandarts']);
+
+Route::get('/mondhygienist', [MondhygienistController::class, 'index'])
+    ->name('mondhygienist.index')
+    ->middleware(['auth', 'role:mondhygienist']);
 
 Route::get('/dashboard', function () {
     return view('dashboard');
