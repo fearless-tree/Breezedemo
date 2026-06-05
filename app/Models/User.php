@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 
 #[Fillable(['name', 'email', 'password', 'rolename'])]
 #[Hidden(['password', 'remember_token'])]
@@ -28,5 +29,12 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function sp_GetAllUsers($user_Id)
+    {
+        $result = DB::select('CALL sp_GetAllUsers(:id)', ['id' => $user_Id]);
+
+        return $result;
     }
 }
