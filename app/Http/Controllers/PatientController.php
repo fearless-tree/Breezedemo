@@ -11,9 +11,8 @@ class PatientController extends Controller
      */
     public function index()
     {
-        // View
-        return view ('Patient.index', [
-            'title' => 'Patient Home',
+        return view('Patient.index', [
+            'title' => 'Patient Home'
         ]);
     }
 

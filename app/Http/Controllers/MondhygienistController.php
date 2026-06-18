@@ -11,9 +11,8 @@ class MondhygienistController extends Controller
      */
     public function index()
     {
-        // View
-        return view('mondhygienist.index', [
-            'title' => 'Mondhygienist Home',
+        return view('Mondhygienist.index', [
+            'title' => 'Mondhygiënist Home'
         ]);
     }
 

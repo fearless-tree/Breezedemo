@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="bg-black border-b border-gray-700 text-white">
+<nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -6,7 +6,7 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-white" />
+                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
                     </a>
                 </div>
 
@@ -17,7 +17,7 @@
                     </x-nav-link>
                 </div>
 
-                @if (Auth::check() && in_array(Auth::user()->rolename, ['patient', 'praktijkmanagement']))
+                @if (Auth::check() && in_array(strtolower(Auth::user()->rolename ?? ''), ['patient', 'praktijkmanagement']))
                     <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                         <x-nav-link :href="route('patient.index')"
                                     :active="request()->routeIs('patient.index')">
@@ -26,47 +26,11 @@
                     </div>
                 @endif
 
-                @if (Auth::check() && Auth::user()->rolename === 'praktijkmanagement')
+                @if (Auth::check() && strtolower(Auth::user()->rolename ?? '') === 'praktijkmanagement')
                     <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                         <x-nav-link :href="route('praktijkmanagement.userroles')"
                                     :active="request()->routeIs('praktijkmanagement.userroles')">
                             {{ __('Gebruikersrollen') }}
-                        </x-nav-link>
-                    </div>
-                @endif
-
-                @if (Auth::check() && Auth::user()->rolename === 'tandarts')
-                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                        <x-nav-link :href="route('tandarts.index')"
-                                    :active="request()->routeIs('tandarts.index')">
-                            {{ __('Tandarts') }}
-                        </x-nav-link>
-                    </div>
-                @endif
-
-                @if (Auth::check() && Auth::user()->rolename === 'mondhygienist')
-                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                        <x-nav-link :href="route('mondhygienist.index')"
-                                    :active="request()->routeIs('mondhygienist.index')">
-                            {{ __('Mondhygienist') }}
-                        </x-nav-link>
-                    </div>
-                @endif
-
-                @if (Auth::check() && Auth::user()->rolename === 'assistent')
-                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                        <x-nav-link :href="route('assistent.index')"
-                                    :active="request()->routeIs('assistent.index')">
-                            {{ __('Assistent') }}
-                        </x-nav-link>
-                    </div>
-                @endif
-
-                @if (Auth::check() && Auth::user()->rolename === 'praktijkmanagement')
-                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                        <x-nav-link :href="route('praktijkmanagement.index')"
-                                    :active="request()->routeIs('praktijkmanagement.index')">
-                            {{ __('Praktijkmanagement') }}
                         </x-nav-link>
                     </div>
                 @endif
@@ -76,7 +40,7 @@
             <div class="hidden sm:flex sm:items-center sm:ms-6">
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
-                        <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-black hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
+                        <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
                             <div>{{ Auth::user()->name }}</div>
 
                             <div class="ms-1">
@@ -97,7 +61,7 @@
                             @csrf
 
                             <x-dropdown-link :href="route('logout')"
-                                             onclick="event.preventDefault();
+                                    onclick="event.preventDefault();
                                                 this.closest('form').submit();">
                                 {{ __('Log Out') }}
                             </x-dropdown-link>
@@ -108,7 +72,7 @@
 
             <!-- Hamburger -->
             <div class="-me-2 flex items-center sm:hidden">
-                <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-white hover:text-gray-300 hover:bg-gray-800 focus:outline-none focus:bg-gray-800 transition duration-150 ease-in-out">
+                <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
                     <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                         <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                         <path :class="{'hidden': ! open, 'inline-flex': open }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -119,18 +83,30 @@
     </div>
 
     <!-- Responsive Navigation Menu -->
-    <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden bg-black">
+    <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+
+            @if (Auth::check() && in_array(strtolower(Auth::user()->rolename ?? ''), ['patient', 'praktijkmanagement']))
+                <x-responsive-nav-link :href="route('patient.index')" :active="request()->routeIs('patient.index')">
+                    {{ __('Patient') }}
+                </x-responsive-nav-link>
+            @endif
+
+            @if (Auth::check() && strtolower(Auth::user()->rolename ?? '') === 'praktijkmanagement')
+                <x-responsive-nav-link :href="route('praktijkmanagement.userroles')" :active="request()->routeIs('praktijkmanagement.userroles')">
+                    {{ __('Gebruikersrollen') }}
+                </x-responsive-nav-link>
+            @endif
         </div>
 
         <!-- Responsive Settings Options -->
-        <div class="pt-4 pb-1 border-t border-gray-700">
+        <div class="pt-4 pb-1 border-t border-gray-200">
             <div class="px-4">
-                <div class="font-medium text-base text-white">{{ Auth::user()->name }}</div>
-                <div class="font-medium text-sm text-gray-300">{{ Auth::user()->email }}</div>
+                <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
+                <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
             </div>
 
             <div class="mt-3 space-y-1">
@@ -143,7 +119,7 @@
                     @csrf
 
                     <x-responsive-nav-link :href="route('logout')"
-                                           onclick="event.preventDefault();
+                            onclick="event.preventDefault();
                                         this.closest('form').submit();">
                         {{ __('Log Out') }}
                     </x-responsive-nav-link>

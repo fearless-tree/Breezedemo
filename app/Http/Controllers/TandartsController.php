@@ -11,9 +11,9 @@ class TandartsController extends Controller
      */
     public function index()
     {
-        // View
+        //
         return view('Tandarts.index', [
-            'title' => 'Tandarts Home',
+            'title' => 'Tandarts Home'
         ]);
     }
 

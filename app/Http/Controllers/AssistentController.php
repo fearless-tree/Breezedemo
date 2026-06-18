@@ -11,9 +11,8 @@ class AssistentController extends Controller
      */
     public function index()
     {
-        // View
         return view('Assistent.index', [
-            'title' => 'Assistent Home',
+            'title' => 'Assistent Home'
         ]);
     }
 
